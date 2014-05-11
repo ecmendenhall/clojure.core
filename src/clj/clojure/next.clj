@@ -538,3 +538,40 @@
     ([this n] nil)
     ([this n default] default)))
 
+(defn <=
+  ([x] true)
+  ([x y]
+     (let [comparison (compare x y)]
+       (or (= 0 comparison) (= -1 comparison))))
+  ([x y & more]
+     (if (<= x y)
+       (if (next more)
+         (recur y (first more) (next more))
+         (<= y (first more)))
+       false)))
+
+(defn >
+  ([x] true)
+  ([x y] (= 1 (compare x y)))
+  ([x y & more]
+    (if (> x y)
+      (if (next more)
+        (recur y (first more) (next more))
+        (> y (first more)))
+      false)))
+
+(defn >=
+  ([x] true)
+  ([x y]
+     (let [comparison (compare x y)]
+       (or (= 0 comparison) (= 1 comparison))))
+  ([x y & more]
+     (if (>= x y)
+       (if (next more)
+         (recur y (first more) (next more))
+         (>= y (first more)))
+       false)))
+
+(defn pos? [x] (> x 0))
+
+(defn neg? [x] (> 0 x))
