@@ -73,3 +73,11 @@
     (is (= false (neg? 0))))
   (testing "returns true for negative numbers"
     (is (= true (neg? -1)))))
+
+(deftest zero?-test
+  (testing "returns false for positive numbers"
+    (is (= false (zero? 1))))
+  (testing "returns true for zero"
+    (is (= true (zero? 0))))
+  (testing "returns false for negative numbers"
+    (is (= false (zero? -1)))))

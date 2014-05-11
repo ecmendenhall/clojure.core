@@ -572,6 +572,11 @@
          (>= y (first more)))
        false)))
 
-(defn pos? [x] (> x 0))
+(defn pos? [x]
+  (= 1 (compare x 0)))
 
-(defn neg? [x] (> 0 x))
+(defn neg? [x]
+  (= -1 (compare x 0)))
+
+(defn zero? [x]
+  (= 0 (compare x 0)))
