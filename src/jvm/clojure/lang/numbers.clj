@@ -18,8 +18,7 @@
            [clojure.lang.platform.numbers Subtraction]
            [clojure.lang.platform.numbers Decrement]
            [clojure.lang.platform.numbers Division]
-           [clojure.lang.platform.numbers Negation]
-           [clojure.lang.platform.numbers Zero]))
+           [clojure.lang.platform.numbers Negation]))
 
 (defmacro bnot [x]
   `(. BitOps (numberBitNot ~x)))
@@ -82,9 +81,6 @@
 (defmacro numbers-equivalent? [x y]
   `(. Equivalence (numbersEquivalent ~x ~y)))
 
-(defmacro is-zero? [x]
-  `(. Zero (numberIsZero ~x)))
-
 (defmacro ->byte [x]
   `(. Cast (castToByte ~x)))
 
@@ -103,13 +99,13 @@
   (-denominator [this] (.getDenominator this)))
 
 (defn- gcd [a b]
-  (if (is-zero? b)
+  (if (zero? b)
     a
     (recur b (mod a b))))
 
 (defn make-ratio [numerator denominator]
  (let [gcd (gcd numerator denominator)]
-    (if (is-zero? gcd)
+    (if (zero? gcd)
       (Ratio. (BigInteger. "0") (BigInteger. "1"))
       (let [n (BigInteger. (.toString (divide numerator gcd)))
             d (BigInteger. (.toString (divide denominator gcd)))]
@@ -152,7 +148,7 @@
 
   BigDecimal
   (-hash [this]
-    (if (is-zero? this)
+    (if (zero? this)
       (.hashCode BigInteger/ZERO)
       (.hashCode (.stripTrailingZeros this))))
 

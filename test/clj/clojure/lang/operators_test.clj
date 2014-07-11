@@ -1,9 +1,11 @@
 (ns clojure.lang.operators-test
-  (:refer-clojure :only [bigint double float bigdec defmacro reify let list list* nil?])
+  (:refer-clojure :only [bigint biginteger double float bigdec defn- defmacro reify let list list* nil?])
   (:require [clojure.test                     :refer :all]
             [clojure.lang.platform.exceptions :refer [class-cast-exception argument-error]]
             [clojure.lang.protocols           :refer [IEquivalence]]
             [clojure.next                     :refer :all]))
+
+(defn- bigdecimal [n] (BigDecimal. n))
 
 (defmacro class-cast-exception-thrown? [& body]
   (list 'is (list* 'thrown? class-cast-exception body)))
@@ -482,3 +484,29 @@
     (is (= false (neg? 0))))
   (testing "returns true for negative numbers"
     (is (= true (neg? -1)))))
+
+(deftest integer-zero-test
+  (is (zero? (int 0)))
+  (is (not (zero? (int 1))))
+  (is (zero? (long 0)))
+  (is (not (zero? (int 1)))))
+
+(deftest big-integer-zero-test
+  (is (zero? (bigint 0)))
+  (is (not (zero? (bigint 1))))
+  (is (zero? (biginteger 0)))
+  (is (not (zero? (biginteger 1)))))
+
+(deftest ratio-zero-test
+  (is (zero? (/ 0 1)))
+  (is (not (zero? (/ 1 2)))))
+
+(deftest big-decimal-zero-test
+  (is (zero? (bigdecimal 0.0)))
+  (is (not (zero? (bigdecimal 1.0)))))
+
+(deftest double-zero-test
+  (is (zero? (double 0.0)))
+  (is (not (zero? (double 1.0))))
+  (is (zero? (float 0.0)))
+  (is (not (zero? (float 1.0)))))

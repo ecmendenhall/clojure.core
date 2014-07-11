@@ -17,11 +17,12 @@
 (defn type [x]
   (platform-object/type x))
 
+(declare zero?)
+
 (require ['clojure.lang.numbers :refer ['numbers-equal? 'numbers-equivalent?
                                         'bshift-right 'bunsigned-shift-right 'bshift-left 'bnot 'band 'band-not 'bor 'bxor 'bclear 'bset 'bflip 'btest
                                         'increment 'decrement
                                         'add 'multiply 'subtract 'divide
-                                        'is-zero?
                                         '->short '->byte '->int '->long]])
 
 (defmacro and
@@ -184,9 +185,6 @@
 
 (defn dec [i]
   (decrement i))
-
-(defn zero? [i]
-  (is-zero? i))
 
 (defn count [obj]
   (-count obj))
